@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_dynamic_theme/dynamic_colors.dart';
 import 'package:flutter_dynamic_theme/flutter_dynamic_theme.dart';
 import 'package:flutter_dynamic_theme/theme_switcher_widgets.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return FlutterDynamicTheme(
       defaultBrightness: Brightness.light,
       data: (Brightness brightness) => ThemeData(
-        primarySwatch: Colors.indigo,
+        primarySwatch: Colors.purple,
         brightness: brightness,
       ),
       loadBrightnessOnStart: true,
@@ -38,6 +39,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  Color _primarySwatch = DynamicColors.primaryColor[1];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,15 +57,16 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('Toggle brightness'),
             ),
             ElevatedButton(
-              onPressed: changeColor,
+              onPressed: showChooser,
+              child: const Text('Pop Up Change brightness'),
+            ),
+            Divider(),
+            ElevatedButton(
+              onPressed: showActionsSettingsColorTheme,
               child: const Text('Change color'),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: showChooser,
-        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
@@ -78,6 +83,63 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  showActionsSettingsColorTheme() {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              title: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        stops: [0.1, 0.8],
+                        colors: [Theme.of(context).primaryColor, Colors.black ]),
+                  ),
+                  padding: EdgeInsets.all(8),
+                  child: Row(
+                    children: <Widget>[
+                      Text( 'Color Theme', style: TextStyle(color: Colors.white),),
+                      Spacer(),
+                      Icon(Icons.close),
+                    ],
+                  )
+              ),
+              titlePadding: EdgeInsets.only(left: 0.0, right: 0.0, top: 0, bottom: 0),
+              contentPadding: EdgeInsets.only(left: 0.0, right: 0.0, top: 0, bottom: 0),
+              content:
+              Container(
+                width: double.maxFinite,
+                height: 300.0,
+                child: ListView.builder(shrinkWrap: true,
+                    itemCount: DynamicColors.primaryColor.length,
+                    itemBuilder: (BuildContext context, int i){
+                      return ListTile(
+                        leading: Container(
+                          decoration: BoxDecoration( borderRadius: BorderRadius.circular(20), color: DynamicColors.primaryColor[i],),
+                          width: 34, height: 34,),
+                        title: Text('${DynamicColors.primaryColorStr[i].toString().toUpperCase()}',),
+                        trailing: Icon(Icons.color_lens),
+                        onTap: () {
+                          setState(() {
+                            _primarySwatch = DynamicColors.primaryColor[i];
+                            FlutterDynamicTheme.of(context).setThemeData(new ThemeData(primarySwatch: _primarySwatch, ));
+                          });
+                          Navigator.pop(context);
+                        },
+                      );
+                    }
+                ),
+              )
+          );
+        });
+  }
   void showChooser() {
     showDialog<void>(
       context: context,
@@ -101,54 +163,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-//region [ Default ]
-class MyApp2 extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp2> {
-  String _platformVersion = 'Unknown';
-
-  @override
-  void initState() {
-    super.initState();
-    // initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  // Future<void> initPlatformState() async {
-  //   String platformVersion;
-  //   // Platform messages may fail, so we use a try/catch PlatformException.
-  //   try {
-  //     platformVersion = await FlutterDynamicTheme.platformVersion;
-  //   } on PlatformException {
-  //     platformVersion = 'Failed to get platform version.';
-  //   }
-  //
-  //   // If the widget was removed from the tree while the asynchronous platform
-  //   // message was in flight, we want to discard the reply rather than calling
-  //   // setState to update our non-existent appearance.
-  //   if (!mounted) return;
-  //
-  //   setState(() {
-  //     _platformVersion = platformVersion;
-  //   });
-  // }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
-      ),
-    );
-  }
-}
-//endregion
