@@ -19,8 +19,8 @@ if you want the list of colors:
 ```
 import 'package:flutter_dynamic_theme/dynamic_colors.dart';
 ```
-![image](assets/Screenshot1.png)
-![image](assets/Screenshot2.png)
+![image](assets/Screenshot1.jpg)
+![image](assets/Screenshot2.jpg)
 
 ## Getting Started
 
