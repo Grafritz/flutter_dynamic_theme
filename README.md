@@ -21,11 +21,6 @@ import 'package:flutter_dynamic_theme/dynamic_colors.dart';
 ```
 ![image](assets/Screenshot1.png)
 ![image](assets/Screenshot2.png)
-![image](assets/Screenshot3.png)
-![image](assets/Screenshot4.png)
-![image](assets/Screenshot5.png)
-![image](assets/Screenshot6.png)
-![image](assets/Screenshot7.png)
 
 ## Getting Started
 
