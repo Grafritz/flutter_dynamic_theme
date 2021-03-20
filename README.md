@@ -25,6 +25,36 @@ import 'package:flutter_dynamic_theme/dynamic_colors.dart';
 ## Getting Started
 
 Follow the instructions [here](https://pub.dev/packages/flutter_dynamic_theme/install).
+```
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FlutterDynamicTheme(
+      defaultBrightness: Brightness.light,
+      data: (Brightness brightness) => ThemeData(
+        primarySwatch: Colors.purple,
+        brightness: brightness,
+      ),
+      loadBrightnessOnStart: true,
+      themedWidgetBuilder: (BuildContext context, ThemeData theme) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: theme,
+          home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        );
+      },
+    );
+  }
+}
+```
+To change the color theme
+```
+FlutterDynamicTheme.of(context).setThemeData(new ThemeData(primarySwatch: Colors.red));
+```
+or
+```
+FlutterDynamicTheme.of(context).setThemeData(new ThemeData(primaryColor: Colors.red));
+```
 
 ## Maintainer
 

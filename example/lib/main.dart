@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return FlutterDynamicTheme(
       defaultBrightness: Brightness.light,
       data: (Brightness brightness) => ThemeData(
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.indigo,
         brightness: brightness,
       ),
       loadBrightnessOnStart: true,
@@ -153,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void changeColor() {
+  /*void changeColor() {
     FlutterDynamicTheme.of(context).setThemeData(
       ThemeData(
         primaryColor: Theme.of(context).primaryColor == Colors.indigo
@@ -161,5 +161,5 @@ class _MyHomePageState extends State<MyHomePage> {
             : Colors.indigo,
       ),
     );
-  }
+  }*/
 }

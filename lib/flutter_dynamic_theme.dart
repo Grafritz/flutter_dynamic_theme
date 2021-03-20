@@ -110,15 +110,20 @@ class DynamicThemeState extends State<FlutterDynamicTheme> {
 
   /// Sets the new brightness
   /// Rebuilds the tree
-  Future<void> setBrightness(Brightness brightness, { Color primarySwatch }) async {
+  Future<void> setBrightness(Brightness brightness) async {
     // Update state with new values
     setState(() {
       _themeData = widget.data(brightness);
       _brightness = brightness;
-      _primarySwatch = primarySwatch;
+      // _primarySwatch = primaryColor;
     });
     // Save the brightness
     await _saveBrightness(brightness);
+    _primarySwatch = await getPrimarySwatch();
+
+    // To retrive the last color Primary
+    if (_brightness != Brightness.dark)
+      setThemeData(new ThemeData(primarySwatch: _primarySwatch ));
   }
 
   /// Toggles the brightness from dark to light
@@ -139,6 +144,7 @@ class DynamicThemeState extends State<FlutterDynamicTheme> {
     });
     // Save the primarySwatch
     _setPrimarySwatch(_primarySwatch);
+    _saveBrightness(Brightness.light);
   }
 
 
@@ -153,13 +159,16 @@ class DynamicThemeState extends State<FlutterDynamicTheme> {
   /// Saves the PrimarySwatch in `SharedPreferences`
   Future<void> _setPrimarySwatch(var primarySwatch) async {
     //! Shouldn't save the primarySwatch if you don't different
-    if (primarySwatch==_primarySwatch) {
+    /*if (primarySwatch==_primarySwatch) {
       return;
-    }
+    }*/
+    print('primarySwatch:$primarySwatch');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     // get the Id of primarySwatch
     int index = DynamicColors.primaryColor.indexWhere((e) => e==primarySwatch).round();
+    print('index:$index');
     int valColor = index<0?1:index;
+    print('valColor:$valColor');
     // Saves _primarySwatch color
     await prefs.setInt( _sharedPreferencesColorKey, valColor);
   }
