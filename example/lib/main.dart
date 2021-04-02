@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dynamic_theme/dynamic_colors.dart';
 import 'package:flutter_dynamic_theme/flutter_dynamic_theme.dart';
 import 'package:flutter_dynamic_theme/theme_switcher_widgets.dart';
+import 'package:flutter_dynamic_theme/color_theme_dialog.dart';
 
 void main() {
   runApp(MyApp());
@@ -88,56 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              title: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: [0.1, 0.8],
-                        colors: [Theme.of(context).primaryColor, Colors.black ]),
-                  ),
-                  padding: EdgeInsets.all(8),
-                  child: Row(
-                    children: <Widget>[
-                      Text( 'Color Theme', style: TextStyle(color: Colors.white),),
-                      Spacer(),
-                      Icon(Icons.close),
-                    ],
-                  )
-              ),
-              titlePadding: EdgeInsets.only(left: 0.0, right: 0.0, top: 0, bottom: 0),
-              contentPadding: EdgeInsets.only(left: 0.0, right: 0.0, top: 0, bottom: 0),
-              content:
-              Container(
-                width: double.maxFinite,
-                height: 300.0,
-                child: ListView.builder(shrinkWrap: true,
-                    itemCount: DynamicColors.primaryColor.length,
-                    itemBuilder: (BuildContext context, int i){
-                      return ListTile(
-                        leading: Container(
-                          decoration: BoxDecoration( borderRadius: BorderRadius.circular(20), color: DynamicColors.primaryColor[i],),
-                          width: 34, height: 34,),
-                        title: Text('${DynamicColors.primaryColorStr[i].toString().toUpperCase()}',),
-                        trailing: Icon(Icons.color_lens),
-                        onTap: () {
-                          setState(() {
-                            _primarySwatch = DynamicColors.primaryColor[i];
-                            FlutterDynamicTheme.of(context).setThemeData(new ThemeData(primarySwatch: _primarySwatch, ));
-                          });
-                          Navigator.pop(context);
-                        },
-                      );
-                    }
-                ),
-              )
-          );
+          return ColorThemeDialog();
         });
   }
   void showChooser() {
@@ -145,6 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       builder: (BuildContext context) {
         return BrightnessSwitcherDialog(
+          activeToggleMode: true,
+          activeColor: true,
+          textDarkMode: 'Mode Dark :(',
+          textLightMode: 'Light Mode :)',
           onSelectedTheme: (Brightness brightness) {
             FlutterDynamicTheme.of(context).setBrightness(brightness);
           },
@@ -152,14 +108,4 @@ class _MyHomePageState extends State<MyHomePage> {
       },
     );
   }
-
-  /*void changeColor() {
-    FlutterDynamicTheme.of(context).setThemeData(
-      ThemeData(
-        primaryColor: Theme.of(context).primaryColor == Colors.indigo
-            ? Colors.red
-            : Colors.indigo,
-      ),
-    );
-  }*/
 }

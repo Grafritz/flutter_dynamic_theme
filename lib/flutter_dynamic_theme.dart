@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:flutter/services.dart';
@@ -44,8 +43,6 @@ class FlutterDynamicTheme extends StatefulWidget {
   static DynamicThemeState of(BuildContext context) {
     return context.findAncestorStateOfType<State<FlutterDynamicTheme>>();
   }
-
-  getPrimarySwatch() {}
 }
 
 class DynamicThemeState extends State<FlutterDynamicTheme> {
@@ -55,8 +52,6 @@ class DynamicThemeState extends State<FlutterDynamicTheme> {
 
   bool _shouldLoadBrightness;
 
-  Color _primarySwatch;
-
   static const String _sharedPreferencesKey = 'isDark';
   static const String _sharedPreferencesColorKey = 'primarySwatchColor';
 
@@ -65,8 +60,6 @@ class DynamicThemeState extends State<FlutterDynamicTheme> {
 
   /// Get the current `Brightness`
   Brightness get brightness => _brightness;
-
-  Color get primarySwatch => _primarySwatch;//DynamicColors.primaryColor[1];
 
   @override
   void initState() {
@@ -93,7 +86,6 @@ class DynamicThemeState extends State<FlutterDynamicTheme> {
     _brightness = widget.defaultBrightness;
     _themeData = widget.data(_brightness);
     _shouldLoadBrightness = widget.loadBrightnessOnStart;
-    _primarySwatch: primarySwatch;
   }
 
   @override
@@ -115,11 +107,10 @@ class DynamicThemeState extends State<FlutterDynamicTheme> {
     setState(() {
       _themeData = widget.data(brightness);
       _brightness = brightness;
-      // _primarySwatch = primaryColor;
     });
     // Save the brightness
     await _saveBrightness(brightness);
-    _primarySwatch = await getPrimarySwatch();
+    var _primarySwatch = await getPrimarySwatch();
 
     // To retrive the last color Primary
     if (_brightness != Brightness.dark)
@@ -137,13 +128,12 @@ class DynamicThemeState extends State<FlutterDynamicTheme> {
   }
 
   /// Changes the theme using the provided `ThemeData`
-  void setThemeData(ThemeData data, { Color primarySwatch }) {
+  void setThemeData(ThemeData data) {
     setState(() {
       _themeData = data;
-      _primarySwatch = data.primaryColor;
     });
     // Save the primarySwatch
-    _setPrimarySwatch(_primarySwatch);
+    _setPrimarySwatch(data.primaryColor);
     _saveBrightness(Brightness.light);
   }
 
@@ -158,10 +148,6 @@ class DynamicThemeState extends State<FlutterDynamicTheme> {
   }
   /// Saves the PrimarySwatch in `SharedPreferences`
   Future<void> _setPrimarySwatch(var primarySwatch) async {
-    //! Shouldn't save the primarySwatch if you don't different
-    /*if (primarySwatch==_primarySwatch) {
-      return;
-    }*/
     print('primarySwatch:$primarySwatch');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     // get the Id of primarySwatch

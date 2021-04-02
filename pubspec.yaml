@@ -1,6 +1,6 @@
 name: flutter_dynamic_theme
 description: Vous permet de spécifier un certain nombre de thèmes de couleurs parmi lesquels l'utilisateur peut choisir. Persiste le thème sélectionné lors des redémarrages de l'application.
-version: 1.0.2
+version: 1.0.3
 #author: Jean Fritz DUVERSEAU
 homepage: https://github.com/Grafritz/flutter_dynamic_theme
 

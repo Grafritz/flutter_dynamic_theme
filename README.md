@@ -5,7 +5,7 @@ Allows you to specify a number of color themes from which the user can choose. T
 ## Include in your project
 ```
 dependencies:
-  flutter_dynamic_theme: ^1.0.1
+  flutter_dynamic_theme: <lastedVersion>
 ```
 run packages get and import it
 ```
@@ -55,6 +55,30 @@ or
 ```
 FlutterDynamicTheme.of(context).setThemeData(new ThemeData(primaryColor: Colors.red));
 ```
+Show popUp to change Brightness or and Color at the same time.
+```
+void showChooser() {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return BrightnessSwitcherDialog(
+          activeToggleMode: true,
+          activeColor: true,
+          textDarkMode: 'Mode Dark :(',
+          textLightMode: 'Light Mode :)',
+          onSelectedTheme: (Brightness brightness) {
+            FlutterDynamicTheme.of(context).setBrightness(brightness);
+          },
+        );
+      },
+    );
+  }
+```
+set ``activeColor: true`` to Activate option list of color
+```
+activeColor: true
+```
+![image](assets/Screenshot3.jpg)
 
 ## Maintainer
 
