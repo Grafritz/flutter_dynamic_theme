@@ -1,15 +1,19 @@
+
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dynamic_colors.dart';
 
-typedef ThemedWidgetBuilder = Widget Function(
-    BuildContext context, ThemeData data);
 
-typedef ThemeDataWithBrightnessBuilder = ThemeData Function(
-    Brightness brightness);
+typedef ThemedWidgetBuilder = Widget Function( BuildContext context, ThemeData data);
+
+typedef ThemeDataWithBrightnessBuilder = ThemeData Function( Brightness brightness);
+
+//class FlutterDynamicTheme { }
+
 
 class FlutterDynamicTheme extends StatefulWidget {
   const FlutterDynamicTheme({
@@ -17,8 +21,7 @@ class FlutterDynamicTheme extends StatefulWidget {
     required this.data,
     required this.themedWidgetBuilder,
     this.defaultBrightness = Brightness.light,
-    this.loadBrightnessOnStart = true,
-  }) : super(key: key);
+    this.loadBrightnessOnStart = true }) : super(key: key);
 
   /// Builder that gets called when the brightness or theme changes
   final ThemedWidgetBuilder themedWidgetBuilder;
@@ -36,13 +39,19 @@ class FlutterDynamicTheme extends StatefulWidget {
   /// Defaults to `true`
   final bool loadBrightnessOnStart;
 
+  static const MethodChannel _channel = MethodChannel('flutter_dynamic_theme');
+
+  static Future<String?> get platformVersion async {
+    final String? version = await _channel.invokeMethod('getPlatformVersion');
+    return version;
+  }
   @override
   DynamicThemeState createState() => DynamicThemeState();
 
   static DynamicThemeState? of(BuildContext context) {
     return context.findAncestorStateOfType<DynamicThemeState>();
   }
-  /*static DynamicThemeState of(BuildContext context) {
+/*static DynamicThemeState of(BuildContext context) {
     return context.findAncestorStateOfType<State<FlutterDynamicTheme>>();
   }*/
 }

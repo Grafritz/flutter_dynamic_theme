@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_dynamic_theme/flutter_dynamic_theme.dart';
@@ -6,10 +7,47 @@ import 'package:flutter_dynamic_theme/theme_switcher_widgets.dart';
 import 'package:flutter_dynamic_theme/color_theme_dialog.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String _platformVersion = 'Unknown';
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    String platformVersion;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    // We also handle the message potentially returning null.
+    try {
+      platformVersion =
+          await FlutterDynamicTheme.platformVersion ?? 'Unknown platform version';
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _platformVersion = platformVersion;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FlutterDynamicTheme(
@@ -21,17 +59,27 @@ class MyApp extends StatelessWidget {
       loadBrightnessOnStart: true,
       themedWidgetBuilder: (BuildContext context, ThemeData theme) {
         return MaterialApp(
-          title: 'Flutter Demo',
+          title: 'F Dynamic Theme [ $_platformVersion ]',
           theme: theme,
-          home: const MyHomePage(title: 'Flutter Demo Home Page'),
+          home: MyHomePage(title: 'Flutter Dynamic Theme [ $_platformVersion ]'),
         );
       },
     );
+    /*return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: Center(
+          child: Text('Running on: $_platformVersion\n'),
+        ),
+      ),
+    );*/
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -39,28 +87,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  // Color _primarySwatch = DynamicColors.primaryColor[1];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Dynamic Theme'),
+        title: Text(widget.title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
-              onPressed: FlutterDynamicTheme.of(context).toggleBrightness,
+              onPressed: FlutterDynamicTheme.of(context)?.toggleBrightness,
               child: const Text('Toggle brightness'),
             ),
             ElevatedButton(
               onPressed: showChooser,
               child: const Text('Pop Up Change brightness'),
             ),
-            Divider(),
+            const Divider(),
             ElevatedButton(
               onPressed: showActionsSettingsColorTheme,
               child: const Text('Change color'),
@@ -69,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.insert_drive_file),
             label: 'Tab 1',
@@ -88,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          return ColorThemeDialog();
+          return const ColorThemeDialog();
         });
   }
   void showChooser() {
@@ -101,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
           textDarkMode: 'Mode Dark :(',
           textLightMode: 'Light Mode :)',
           onSelectedTheme: (Brightness brightness) {
-            FlutterDynamicTheme.of(context).setBrightness(brightness);
+            FlutterDynamicTheme.of(context)?.setBrightness(brightness);
           },
         );
       },

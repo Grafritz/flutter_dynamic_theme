@@ -1,5 +1,7 @@
 # flutter_dynamic_theme
 
+Vous permet de spécifier un certain nombre de thèmes de couleurs parmi lesquels l'utilisateur peut choisir. Persiste le thème sélectionné lors des redémarrages de l'application.
+
 Allows you to specify a number of color themes from which the user can choose. The selected theme persists when the application is restarted.
 
 ## Include in your project
@@ -49,11 +51,11 @@ class MyApp extends StatelessWidget {
 ```
 To change the color theme
 ```
-FlutterDynamicTheme.of(context).setThemeData(new ThemeData(primarySwatch: Colors.red));
+FlutterDynamicTheme.of(context)?.setThemeData(new ThemeData(primarySwatch: Colors.red));
 ```
 or
 ```
-FlutterDynamicTheme.of(context).setThemeData(new ThemeData(primaryColor: Colors.red));
+FlutterDynamicTheme.of(context)?.setThemeData(new ThemeData(primaryColor: Colors.red));
 ```
 Show popUp to change Brightness or and Color at the same time.
 ```

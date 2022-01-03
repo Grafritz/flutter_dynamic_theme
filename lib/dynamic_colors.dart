@@ -60,7 +60,7 @@ class DynamicColors{
   }
 
 
-  static List<ColorSwatch> materialColors = const <ColorSwatch>[
+  /*static List<ColorSwatch> materialColors = const <ColorSwatch>[
     Colors.red,
     Colors.pink,
     Colors.purple,
@@ -80,9 +80,9 @@ class DynamicColors{
     Colors.brown,
     Colors.grey,
     Colors.blueGrey
-  ];
+  ];*/
 
-  static List<ColorSwatch> accentColors = const <ColorSwatch>[
+  /*static List<ColorSwatch> accentColors = const <ColorSwatch>[
     Colors.redAccent,
     Colors.pinkAccent,
     Colors.purpleAccent,
@@ -99,9 +99,9 @@ class DynamicColors{
     Colors.amberAccent,
     Colors.orangeAccent,
     Colors.deepOrangeAccent,
-  ];
+  ];*/
 
-  static List<ColorSwatch> fullMaterialColors = const <ColorSwatch>[
+  /*static List<ColorSwatch> fullMaterialColors = const <ColorSwatch>[
     const ColorSwatch(0xFFFFFFFF, {500: Colors.white}),
     const ColorSwatch(0xFF000000, {500: Colors.black}),
     Colors.red,
@@ -140,5 +140,6 @@ class DynamicColors{
     Colors.grey,
     Colors.blueGrey
   ];
+*/
 
 }

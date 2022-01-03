@@ -1,4 +1,4 @@
-## 1.0.5
+## 1.0.6
 * Add platform iOS, Web, windows
 
 ## 1.0.4
