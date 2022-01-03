@@ -1,3 +1,6 @@
+## 1.0.5
+* Add platform iOS, Web, windows
+
 ## 1.0.4
 * Updated the plugin to null-safety
 * sdk: ">=2.15.1 <3.0.0"
