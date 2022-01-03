@@ -46,7 +46,7 @@ class _ColorThemeDialogState extends State<ColorThemeDialog> {
                   onTap: () {
                     setState(() {
                      var _primarySwatch = DynamicColors.primaryColor[i];
-                      FlutterDynamicTheme.of(context).setThemeData(new ThemeData(primarySwatch: _primarySwatch, ));
+                      FlutterDynamicTheme.of(context)?.setThemeData( ThemeData(primarySwatch: _primarySwatch, ));
                     });
                     Navigator.pop(context, DynamicColors.primaryColor[i]);
                   },

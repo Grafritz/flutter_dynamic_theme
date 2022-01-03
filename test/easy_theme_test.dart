@@ -3,7 +3,7 @@ import 'package:flutter_dynamic_theme/flutter_dynamic_theme.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 ValueKey<String> key = const ValueKey<String>('ok');
-DynamicThemeState state;
+DynamicThemeState? state;
 GlobalKey<DynamicThemeState> easyThemeKey = GlobalKey<DynamicThemeState>();
 
 void main() {
@@ -48,7 +48,7 @@ class ButtonPage extends StatelessWidget {
       onPressed: () {
         state = FlutterDynamicTheme.of(context);
       },
-      key: key,
+      key: key, child: null,
     );
   }
 }

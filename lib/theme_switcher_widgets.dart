@@ -4,7 +4,7 @@ import 'package:flutter_dynamic_theme/dynamic_colors.dart';
 import 'flutter_dynamic_theme.dart';
 
 class BrightnessSwitcherDialog extends StatelessWidget {
-  const BrightnessSwitcherDialog({Key key, this.onSelectedTheme,
+  const BrightnessSwitcherDialog({ Key? key, required this.onSelectedTheme,
     this.activeToggleMode:true,
     this.activeColor:false,
     this.textTitle:'Select Theme',
@@ -29,7 +29,7 @@ class BrightnessSwitcherDialog extends StatelessWidget {
           child: RadioListTile<Brightness>(
             value: Brightness.light,
             groupValue: Theme.of(context).brightness,
-            onChanged: (Brightness value) {
+            onChanged: (Brightness? value) {
               onSelectedTheme(Brightness.light);
             },
             title: Text(this.textLightMode),
@@ -40,7 +40,7 @@ class BrightnessSwitcherDialog extends StatelessWidget {
           child: RadioListTile<Brightness>(
             value: Brightness.dark,
             groupValue: Theme.of(context).brightness,
-            onChanged: (Brightness value) {
+            onChanged: (Brightness? value) {
               onSelectedTheme(Brightness.dark);
             },
             title: Text(this.textDarkMode),
@@ -63,8 +63,8 @@ class BrightnessSwitcherDialog extends StatelessWidget {
                      title: Text('${DynamicColors.primaryColorStr[i].toString().toUpperCase()}',),
                       trailing: Icon(Icons.color_lens),
                       onTap: () {
-                          var _primarySwatch = DynamicColors.primaryColor[i];
-                          FlutterDynamicTheme.of(context).setThemeData(new ThemeData(primarySwatch: _primarySwatch, ));
+                        var _primarySwatch = DynamicColors.primaryColor[i];
+                        FlutterDynamicTheme.of(context)?.setThemeData( ThemeData(primarySwatch: _primarySwatch, ));
                         Navigator.pop(context, DynamicColors.primaryColor[i]);
                       },
                     );

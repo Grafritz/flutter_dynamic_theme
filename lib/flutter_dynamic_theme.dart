@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,9 +13,9 @@ typedef ThemeDataWithBrightnessBuilder = ThemeData Function(
 
 class FlutterDynamicTheme extends StatefulWidget {
   const FlutterDynamicTheme({
-    Key key,
-    this.data,
-    this.themedWidgetBuilder,
+    Key? key,
+    required this.data,
+    required this.themedWidgetBuilder,
     this.defaultBrightness = Brightness.light,
     this.loadBrightnessOnStart = true,
   }) : super(key: key);
@@ -40,17 +39,20 @@ class FlutterDynamicTheme extends StatefulWidget {
   @override
   DynamicThemeState createState() => DynamicThemeState();
 
-  static DynamicThemeState of(BuildContext context) {
-    return context.findAncestorStateOfType<State<FlutterDynamicTheme>>();
+  static DynamicThemeState? of(BuildContext context) {
+    return context.findAncestorStateOfType<DynamicThemeState>();
   }
+  /*static DynamicThemeState of(BuildContext context) {
+    return context.findAncestorStateOfType<State<FlutterDynamicTheme>>();
+  }*/
 }
 
 class DynamicThemeState extends State<FlutterDynamicTheme> {
-  ThemeData _themeData;
+  late ThemeData _themeData;
 
-  Brightness _brightness;
+  Brightness _brightness = Brightness.light;
 
-  bool _shouldLoadBrightness;
+  bool _shouldLoadBrightness = true;
 
   static const String _sharedPreferencesKey = 'isDark';
   static const String _sharedPreferencesColorKey = 'primarySwatchColor';
@@ -112,7 +114,7 @@ class DynamicThemeState extends State<FlutterDynamicTheme> {
     await _saveBrightness(brightness);
     var _primarySwatch = await getPrimarySwatch();
 
-    // To retrive the last color Primary
+    // To  retrive the last color Primary
     if (_brightness != Brightness.dark)
       setThemeData(new ThemeData(primarySwatch: _primarySwatch ));
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_dynamic_theme/dynamic_colors.dart';
 import 'package:flutter_dynamic_theme/flutter_dynamic_theme.dart';
 import 'package:flutter_dynamic_theme/theme_switcher_widgets.dart';
 import 'package:flutter_dynamic_theme/color_theme_dialog.dart';
@@ -41,7 +40,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  Color _primarySwatch = DynamicColors.primaryColor[1];
+  // Color _primarySwatch = DynamicColors.primaryColor[1];
 
   @override
   Widget build(BuildContext context) {

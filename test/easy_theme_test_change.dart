@@ -10,20 +10,20 @@ void main() {
   testWidgets('change brightness', (WidgetTester tester) async {
     await tester.pumpWidget(MyApp());
 
-    MaterialApp app = find.byType(MaterialApp).evaluate().first.widget;
-    expect(app.theme.brightness, equals(Brightness.dark));
+    MaterialApp app = find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
+    expect(app.theme?.brightness, equals(Brightness.dark));
 
     await tester.tap(find.byKey(key));
     await tester.pumpAndSettle();
 
-    app = find.byType(MaterialApp).evaluate().first.widget;
-    expect(app.theme.brightness, equals(Brightness.light));
+    app = find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
+    expect(app.theme?.brightness, equals(Brightness.light));
 
     await tester.tap(find.byKey(key));
     await tester.pumpAndSettle();
 
-    app = find.byType(MaterialApp).evaluate().first.widget;
-    expect(app.theme.brightness, equals(Brightness.dark));
+    app = find.byType(MaterialApp).evaluate().first.widget as MaterialApp;
+    expect(app.theme?.brightness, equals(Brightness.dark));
   });
 }
 
@@ -54,12 +54,12 @@ class ButtonPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        FlutterDynamicTheme.of(context).setBrightness(
+        FlutterDynamicTheme.of(context)?.setBrightness(
             Theme.of(context).brightness == Brightness.dark
                 ? Brightness.light
                 : Brightness.dark);
       },
-      key: key,
+      key: key, child: null,
     );
   }
 }

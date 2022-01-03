@@ -1,21 +1,26 @@
 name: flutter_dynamic_theme
 description: Vous permet de spécifier un certain nombre de thèmes de couleurs parmi lesquels l'utilisateur peut choisir. Persiste le thème sélectionné lors des redémarrages de l'application.
-version: 1.0.3
+version: 1.0.4
 #author: Jean Fritz DUVERSEAU
 homepage: https://github.com/Grafritz/flutter_dynamic_theme
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.20.0"
+  sdk: ">=2.15.1 <3.0.0"
+  flutter: ">=2.5.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  shared_preferences: ^2.0.5
+
+  flutter_web_plugins:
+    sdk: flutter
+
+  shared_preferences: ^2.0.11
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^1.0.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
